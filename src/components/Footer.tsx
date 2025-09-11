@@ -1,5 +1,5 @@
 import React from 'react';
-import { Brain, Mail, Phone, MapPin, Facebook, Twitter, Linkedin, Instagram, Youtube } from 'lucide-react';
+import { Mail, Phone, MapPin, Facebook, Twitter, Linkedin, Instagram, Youtube } from 'lucide-react';
 
 const Footer = () => {
   const quickLinks = [
@@ -63,10 +63,11 @@ const Footer = () => {
           {/* Company Info */}
           <div className="lg:col-span-2 md:col-span-2">
             <div className="flex items-center space-x-2 mb-6">
-              <div className="bg-gradient-to-r from-blue-600 to-purple-600 p-2 rounded-lg">
-                <Brain className="h-8 w-8 text-white" />
-              </div>
-              <span className="text-2xl font-bold">Scalezix Academy</span>
+              <img 
+                src="/scalezix-logo.webp" 
+                alt="Scalezix Academy" 
+                className="h-16 w-auto object-contain brightness-0 invert"
+              />
             </div>
             <p className="text-gray-300 mb-6 leading-relaxed">
               Empowering the next generation of AI professionals through comprehensive, hands-on education. 
