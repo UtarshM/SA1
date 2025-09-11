@@ -64,9 +64,9 @@ const Footer = () => {
           <div className="lg:col-span-2 md:col-span-2">
             <div className="flex items-center space-x-2 mb-6">
               <img 
-                src="/scalezix-logo.webp" 
+                src="/scalezix-academy-logo.png" 
                 alt="Scalezix Academy" 
-                className="h-16 w-auto object-contain brightness-0 invert"
+                className="h-16 w-auto object-contain"
               />
             </div>
             <p className="text-gray-300 mb-6 leading-relaxed">

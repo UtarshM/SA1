@@ -37,10 +37,9 @@ const Header = () => {
           <div className="flex items-center space-x-2">
             <Link to="/" className="flex items-center space-x-2">
               <img 
-                src="/scalezix-logo.webp" 
+                src="/scalezix-academy-logo.png" 
                 alt="Scalezix Academy" 
                 className="h-12 w-auto object-contain"
-                style={{ filter: 'drop-shadow(0 0 0 transparent)' }}
               />
             </Link>
           </div>
