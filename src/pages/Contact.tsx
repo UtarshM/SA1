@@ -279,7 +279,7 @@ const Contact = () => {
                 <div className="space-y-4">
                   <div className="flex items-start space-x-3">
                     <MapPin className="h-5 w-5 text-blue-600 mt-1 flex-shrink-0" />
-                    <span className="text-gray-700">iHub (IIT Gandhinagar Innovation & Incubation Centre), PDPU Innovation & Incubation Centre, Raisan, Gandhinagar, Gujarat 382007</span>
+                    <span className="text-gray-700">iHub Ahmedabad, Gujarat</span>
                   </div>
                   <div className="flex items-center space-x-3">
                     <Clock className="h-5 w-5 text-blue-600" />

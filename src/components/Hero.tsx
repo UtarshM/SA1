@@ -25,23 +25,23 @@ const Hero = () => {
           {/* Badge */}
           <div className="inline-flex items-center space-x-2 bg-white/80 backdrop-blur-sm rounded-full px-4 py-2 mb-8 border border-blue-200">
             <Sparkles className="h-4 w-4 text-blue-600" />
-            <span className="text-sm font-medium text-gray-700">Structured, Outcome-Driven Academy</span>
+            <span className="text-sm font-medium text-gray-700">Leading AI Education Platform</span>
           </div>
 
           {/* Main Headline */}
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 mb-6 leading-tight">
-            Learn Skills That{' '}
+            Master AI with{' '}
             <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-              Employers and Markets
+              Expert-Led Courses
             </span>
             <br />
-            Actually Demand
+            at Scalezix Academy
           </h1>
 
           {/* Subtext */}
           <p className="text-xl sm:text-2xl text-gray-600 mb-8 max-w-3xl mx-auto leading-relaxed">
-            Structured programs, live mentorship, and real projects — not recorded fluff. 
-            Transform from learner to professional.
+            Learn cutting-edge AI skills from top instructors and become an industry leader with 
+            hands-on projects and real-world applications.
           </p>
 
           {/* CTA Buttons */}
