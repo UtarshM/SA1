@@ -33,7 +33,7 @@ const Contact = () => {
       icon: <Phone className="h-6 w-6" />,
       title: "Call Us",
       details: "+91 82000 10241",
-      description: "Mon-Fri from 9am to 6pm IST"
+      description: "Mon-Sat from 10am to 6pm IST"
     },
     {
       icon: <MapPin className="h-6 w-6" />,
@@ -44,8 +44,8 @@ const Contact = () => {
     {
       icon: <Clock className="h-6 w-6" />,
       title: "Office Hours",
-      details: "Mon-Fri: 9am-6pm IST",
-      description: "Weekend support available"
+      details: "Mon-Sat: 10am-6pm IST",
+      description: "Sunday closed"
     }
   ];
 
@@ -283,7 +283,7 @@ const Contact = () => {
                   </div>
                   <div className="flex items-center space-x-3">
                     <Clock className="h-5 w-5 text-blue-600" />
-                    <span className="text-gray-700">Monday - Friday: 9:00 AM - 6:00 PM IST</span>
+                    <span className="text-gray-700">Monday - Saturday: 10:00 AM - 6:00 PM IST</span>
                   </div>
                   <div className="flex items-center space-x-3">
                     <Phone className="h-5 w-5 text-blue-600" />
