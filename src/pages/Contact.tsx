@@ -33,18 +33,18 @@ const Contact = () => {
       icon: <Phone className="h-6 w-6" />,
       title: "Call Us",
       details: "+91 82000 10241",
-      description: "Mon-Fri from 8am to 5pm"
+      description: "Mon-Fri from 9am to 6pm IST"
     },
     {
       icon: <MapPin className="h-6 w-6" />,
       title: "Visit Us",
-      details: "San Francisco, CA 94105",
-      description: "Come say hello at our office"
+      details: "iHub, Ahmedabad",
+      description: "Come say hello at our campus"
     },
     {
       icon: <Clock className="h-6 w-6" />,
       title: "Office Hours",
-      details: "Mon-Fri: 8am-5pm PST",
+      details: "Mon-Fri: 9am-6pm IST",
       description: "Weekend support available"
     }
   ];
@@ -268,7 +268,7 @@ const Contact = () => {
               Visit Our Campus
             </h2>
             <p className="text-xl text-gray-600">
-              Located in the heart of San Francisco's tech district
+              Located at iHub, Ahmedabad - India's Premier Innovation Hub
             </p>
           </div>
 
@@ -277,23 +277,23 @@ const Contact = () => {
               <div>
                 <h3 className="text-2xl font-bold text-gray-900 mb-4">Scalezix Academy Campus</h3>
                 <div className="space-y-4">
-                  <div className="flex items-center space-x-3">
-                    <MapPin className="h-5 w-5 text-blue-600" />
-                    <span className="text-gray-700">123 Tech Street, San Francisco, CA 94105</span>
+                  <div className="flex items-start space-x-3">
+                    <MapPin className="h-5 w-5 text-blue-600 mt-1 flex-shrink-0" />
+                    <span className="text-gray-700">iHub (IIT Gandhinagar Innovation & Incubation Centre), PDPU Innovation & Incubation Centre, Raisan, Gandhinagar, Gujarat 382007</span>
                   </div>
                   <div className="flex items-center space-x-3">
                     <Clock className="h-5 w-5 text-blue-600" />
-                    <span className="text-gray-700">Monday - Friday: 8:00 AM - 6:00 PM</span>
+                    <span className="text-gray-700">Monday - Friday: 9:00 AM - 6:00 PM IST</span>
                   </div>
                   <div className="flex items-center space-x-3">
                     <Phone className="h-5 w-5 text-blue-600" />
-                    <span className="text-gray-700">+1 (555) 123-4567</span>
+                    <span className="text-gray-700">+91 82000 10241</span>
                   </div>
                 </div>
                 <div className="mt-6">
                   <p className="text-gray-600 mb-4">
-                    Our modern campus features state-of-the-art AI labs, collaborative learning spaces, 
-                    and all the resources you need for hands-on AI education.
+                    Located at India's premier innovation hub, our campus features state-of-the-art AI labs, 
+                    collaborative learning spaces, and all the resources you need for hands-on AI education.
                   </p>
                   <button className="bg-blue-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-blue-700 transition-colors duration-200">
                     Schedule a Visit
@@ -303,8 +303,8 @@ const Contact = () => {
               <div className="bg-gray-200 rounded-lg h-64 flex items-center justify-center">
                 <div className="text-center">
                   <MapPin className="h-12 w-12 text-gray-400 mx-auto mb-2" />
-                  <p className="text-gray-500">Interactive Map</p>
-                  <p className="text-sm text-gray-400">San Francisco, CA</p>
+                  <p className="text-gray-500">iHub Ahmedabad</p>
+                  <p className="text-sm text-gray-400">Gandhinagar, Gujarat</p>
                 </div>
               </div>
             </div>
