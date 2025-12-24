@@ -1,115 +1,73 @@
-import React, { useState } from 'react';
-import { Calendar, User, ArrowRight, Clock, Search, Tag } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
+import { Calendar, User, ArrowRight, Clock, Search, Tag, Loader } from 'lucide-react';
+import {
+  fetchPosts,
+  fetchCategories,
+  WordPressPost,
+  WordPressCategory,
+  getFeaturedImageUrl,
+  getAuthorName,
+  stripHtml,
+  formatDate,
+  calculateReadTime,
+  getCategories
+} from '../services/wordpress';
 
 const Blog = () => {
+  const [posts, setPosts] = useState<WordPressPost[]>([]);
+  const [categories, setCategories] = useState<WordPressCategory[]>([]);
+  const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState('All');
+  const [selectedCategory, setSelectedCategory] = useState<number | undefined>(undefined);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
 
-  const categories = ['All', 'AI Trends', 'Career Advice', 'Technical', 'Ethics', 'NLP', 'Healthcare', 'Industry News'];
+  // Fetch categories on mount
+  useEffect(() => {
+    const loadCategories = async () => {
+      const cats = await fetchCategories();
+      setCategories(cats);
+    };
+    loadCategories();
+  }, []);
 
-  const blogPosts = [
-    {
-      id: 1,
-      title: "The Future of AI: Trends to Watch in 2024",
-      excerpt: "Explore the latest developments in artificial intelligence and what they mean for the future of technology and society. From generative AI to autonomous systems, discover what's coming next.",
-      author: "Dr. Sarah Mitchell",
-      date: "March 15, 2024",
-      readTime: "5 min read",
-      image: "https://images.pexels.com/photos/8386440/pexels-photo-8386440.jpeg?auto=compress&cs=tinysrgb&w=600",
-      category: "AI Trends",
-      featured: true
-    },
-    {
-      id: 2,
-      title: "Breaking into AI: A Complete Career Guide",
-      excerpt: "Everything you need to know about starting a career in artificial intelligence, from skills to opportunities. Learn about different AI roles and how to prepare for them.",
-      author: "Michael Chen",
-      date: "March 12, 2024",
-      readTime: "8 min read",
-      image: "https://images.pexels.com/photos/8386434/pexels-photo-8386434.jpeg?auto=compress&cs=tinysrgb&w=600",
-      category: "Career Advice",
-      featured: false
-    },
-    {
-      id: 3,
-      title: "Machine Learning vs Deep Learning: Understanding the Difference",
-      excerpt: "A comprehensive comparison of machine learning and deep learning approaches, their applications, and when to use each. Perfect for beginners and intermediate learners.",
-      author: "Emily Rodriguez",
-      date: "March 10, 2024",
-      readTime: "6 min read",
-      image: "https://images.pexels.com/photos/8386422/pexels-photo-8386422.jpeg?auto=compress&cs=tinysrgb&w=600",
-      category: "Technical",
-      featured: false
-    },
-    {
-      id: 4,
-      title: "AI Ethics: Building Responsible AI Systems",
-      excerpt: "Learn about the ethical considerations in AI development and how to create AI systems that benefit society. Explore bias, fairness, and transparency in AI.",
-      author: "Dr. James Wilson",
-      date: "March 8, 2024",
-      readTime: "7 min read",
-      image: "https://images.pexels.com/photos/8386433/pexels-photo-8386433.jpeg?auto=compress&cs=tinysrgb&w=600",
-      category: "Ethics",
-      featured: false
-    },
-    {
-      id: 5,
-      title: "Natural Language Processing: From Text to Understanding",
-      excerpt: "Discover how NLP is revolutionizing human-computer interaction and the latest breakthroughs in language models. Learn about transformers, BERT, and GPT.",
-      author: "Lisa Thompson",
-      date: "March 5, 2024",
-      readTime: "9 min read",
-      image: "https://images.pexels.com/photos/8386439/pexels-photo-8386439.jpeg?auto=compress&cs=tinysrgb&w=600",
-      category: "NLP",
-      featured: false
-    },
-    {
-      id: 6,
-      title: "Computer Vision Applications in Healthcare",
-      excerpt: "Explore how computer vision is transforming medical diagnosis and treatment through innovative AI applications. Real-world case studies and future possibilities.",
-      author: "Dr. Mark Johnson",
-      date: "March 3, 2024",
-      readTime: "6 min read",
-      image: "https://images.pexels.com/photos/8386423/pexels-photo-8386423.jpeg?auto=compress&cs=tinysrgb&w=600",
-      category: "Healthcare",
-      featured: false
-    },
-    {
-      id: 7,
-      title: "AI in Finance: Revolutionizing Banking and Investment",
-      excerpt: "How artificial intelligence is transforming the financial sector, from algorithmic trading to fraud detection and personalized banking services.",
-      author: "Robert Kim",
-      date: "March 1, 2024",
-      readTime: "7 min read",
-      image: "https://images.pexels.com/photos/8386440/pexels-photo-8386440.jpeg?auto=compress&cs=tinysrgb&w=600",
-      category: "Industry News",
-      featured: false
-    },
-    {
-      id: 8,
-      title: "Getting Started with TensorFlow: A Beginner's Guide",
-      excerpt: "Learn the basics of TensorFlow and how to build your first neural network. Step-by-step tutorial with practical examples and code snippets.",
-      author: "Anna Martinez",
-      date: "February 28, 2024",
-      readTime: "10 min read",
-      image: "https://images.pexels.com/photos/8386434/pexels-photo-8386434.jpeg?auto=compress&cs=tinysrgb&w=600",
-      category: "Technical",
-      featured: false
-    }
-  ];
+  // Fetch posts when filters change
+  useEffect(() => {
+    const loadPosts = async () => {
+      setLoading(true);
+      const { posts: fetchedPosts, totalPages: pages } = await fetchPosts(
+        currentPage,
+        9,
+        selectedCategory,
+        searchTerm
+      );
+      setPosts(fetchedPosts);
+      setTotalPages(pages);
+      setLoading(false);
+    };
+    
+    // Debounce search
+    const timer = setTimeout(() => {
+      loadPosts();
+    }, 500);
 
-  const filteredPosts = blogPosts.filter(post => {
-    const matchesSearch = post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         post.excerpt.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesCategory = selectedCategory === 'All' || post.category === selectedCategory;
-    return matchesSearch && matchesCategory;
-  });
+    return () => clearTimeout(timer);
+  }, [currentPage, selectedCategory, searchTerm]);
 
-  const featuredPost = filteredPosts.find(post => post.featured);
-  const regularPosts = filteredPosts.filter(post => !post.featured);
+  const handleCategoryChange = (categoryId: number | undefined) => {
+    setSelectedCategory(categoryId);
+    setCurrentPage(1);
+  };
 
-  const getCategoryColor = (category: string) => {
-    const colors = {
+  const handleSearch = (value: string) => {
+    setSearchTerm(value);
+    setCurrentPage(1);
+  };
+
+  const getCategoryColor = (categoryName: string) => {
+    const colors: { [key: string]: string } = {
       'AI Trends': 'bg-blue-100 text-blue-800',
       'Career Advice': 'bg-green-100 text-green-800',
       'Technical': 'bg-purple-100 text-purple-800',
@@ -118,20 +76,44 @@ const Blog = () => {
       'Healthcare': 'bg-pink-100 text-pink-800',
       'Industry News': 'bg-teal-100 text-teal-800'
     };
-    return colors[category as keyof typeof colors] || 'bg-gray-100 text-gray-800';
+    return colors[categoryName] || 'bg-gray-100 text-gray-800';
   };
+
+  const featuredPost = posts.length > 0 ? posts[0] : null;
+  const regularPosts = posts.slice(1);
 
   return (
     <div className="pt-16">
+      <Helmet>
+        <title>AI Learning Insights & Guides | Scalezix Academy Blog</title>
+        <meta 
+          name="description" 
+          content="Read simplified explanations, applied perspectives, and learning guidance on artificial intelligence and modern AI tools." 
+        />
+        <meta name="keywords" content="AI blog, machine learning tutorials, AI career advice, artificial intelligence trends, deep learning, NLP, computer vision" />
+        <link rel="canonical" href="https://scalezixacademy.com/blog" />
+        
+        {/* Open Graph */}
+        <meta property="og:title" content="AI Blog - Latest Insights & Trends | Scalezix Academy" />
+        <meta property="og:description" content="Stay updated with the latest AI trends, tutorials, and career advice from industry experts." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://scalezixacademy.com/blog" />
+        
+        {/* Twitter Card */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="AI Blog - Latest Insights & Trends | Scalezix Academy" />
+        <meta name="twitter:description" content="Stay updated with the latest AI trends, tutorials, and career advice." />
+      </Helmet>
+
       {/* Hero Section */}
       <section className="py-20 bg-gradient-to-br from-blue-50 via-purple-50 to-indigo-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h1 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-6">
-              AI Insights & Updates
+              Scalezix Academy Blog
             </h1>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Stay updated with the latest AI trends, career advice, and technical insights from industry experts
+              Our blog shares simple explanations, practical perspectives, and learning guidance around artificial intelligence and modern AI tools.
             </p>
           </div>
         </div>
@@ -149,72 +131,95 @@ const Blog = () => {
                   placeholder="Search articles..."
                   className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
+                  onChange={(e) => handleSearch(e.target.value)}
                 />
               </div>
               <div className="flex flex-wrap gap-2">
+                <button
+                  onClick={() => handleCategoryChange(undefined)}
+                  className={`px-4 py-2 rounded-lg font-medium transition-all duration-200 ${
+                    selectedCategory === undefined
+                      ? 'bg-blue-600 text-white'
+                      : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                  }`}
+                >
+                  All
+                </button>
                 {categories.map((category) => (
                   <button
-                    key={category}
-                    onClick={() => setSelectedCategory(category)}
+                    key={category.id}
+                    onClick={() => handleCategoryChange(category.id)}
                     className={`px-4 py-2 rounded-lg font-medium transition-all duration-200 ${
-                      selectedCategory === category
+                      selectedCategory === category.id
                         ? 'bg-blue-600 text-white'
                         : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                     }`}
                   >
-                    {category}
+                    {category.name} ({category.count})
                   </button>
                 ))}
               </div>
             </div>
           </div>
 
+          {/* Loading State */}
+          {loading && (
+            <div className="flex justify-center items-center py-20">
+              <Loader className="h-12 w-12 text-blue-600 animate-spin" />
+            </div>
+          )}
+
           {/* Featured Post */}
-          {featuredPost && (
+          {!loading && featuredPost && (
             <div className="mb-16">
               <h2 className="text-2xl font-bold text-gray-900 mb-8">Featured Article</h2>
               <div className="bg-white rounded-xl shadow-lg overflow-hidden">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-0">
                   <div className="relative">
                     <img
-                      src={featuredPost.image}
-                      alt={featuredPost.title}
+                      src={getFeaturedImageUrl(featuredPost)}
+                      alt={featuredPost.title.rendered}
                       className="w-full h-64 lg:h-full object-cover"
                     />
-                    <div className="absolute top-4 left-4">
-                      <span className={`px-3 py-1 rounded-full text-sm font-medium ${getCategoryColor(featuredPost.category)}`}>
-                        {featuredPost.category}
-                      </span>
-                    </div>
+                    {getCategories(featuredPost).length > 0 && (
+                      <div className="absolute top-4 left-4">
+                        <span className={`px-3 py-1 rounded-full text-sm font-medium ${getCategoryColor(getCategories(featuredPost)[0])}`}>
+                          {getCategories(featuredPost)[0]}
+                        </span>
+                      </div>
+                    )}
                   </div>
                   <div className="p-8 flex flex-col justify-center">
-                    <h3 className="text-2xl font-bold text-gray-900 mb-4 hover:text-blue-600 transition-colors duration-200">
-                      {featuredPost.title}
-                    </h3>
+                    <Link to={`/blog/${featuredPost.slug}`}>
+                      <h3 className="text-2xl font-bold text-gray-900 mb-4 hover:text-blue-600 transition-colors duration-200">
+                        {featuredPost.title.rendered}
+                      </h3>
+                    </Link>
                     <p className="text-gray-600 mb-6 leading-relaxed">
-                      {featuredPost.excerpt}
+                      {stripHtml(featuredPost.excerpt.rendered).substring(0, 200)}...
                     </p>
                     <div className="flex items-center justify-between text-sm text-gray-500 mb-6">
                       <div className="flex items-center space-x-4">
                         <div className="flex items-center">
                           <User className="h-4 w-4 mr-1" />
-                          {featuredPost.author}
+                          {getAuthorName(featuredPost)}
                         </div>
                         <div className="flex items-center">
                           <Calendar className="h-4 w-4 mr-1" />
-                          {featuredPost.date}
+                          {formatDate(featuredPost.date)}
                         </div>
                       </div>
                       <div className="flex items-center">
                         <Clock className="h-4 w-4 mr-1" />
-                        {featuredPost.readTime}
+                        {calculateReadTime(featuredPost.content.rendered)}
                       </div>
                     </div>
-                    <button className="group flex items-center text-blue-600 hover:text-blue-700 font-medium transition-colors duration-200 self-start">
-                      Read Full Article
-                      <ArrowRight className="h-4 w-4 ml-1 group-hover:translate-x-1 transition-transform" />
-                    </button>
+                    <Link to={`/blog/${featuredPost.slug}`}>
+                      <button className="group flex items-center text-blue-600 hover:text-blue-700 font-medium transition-colors duration-200 self-start">
+                        Read Full Article
+                        <ArrowRight className="h-4 w-4 ml-1 group-hover:translate-x-1 transition-transform" />
+                      </button>
+                    </Link>
                   </div>
                 </div>
               </div>
@@ -222,60 +227,96 @@ const Blog = () => {
           )}
 
           {/* Regular Posts Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {regularPosts.map((post) => (
-              <article key={post.id} className="bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200 overflow-hidden">
-                <div className="relative">
-                  <img
-                    src={post.image}
-                    alt={post.title}
-                    className="w-full h-48 object-cover"
-                  />
-                  <div className="absolute top-4 left-4">
-                    <span className={`px-3 py-1 rounded-full text-sm font-medium ${getCategoryColor(post.category)}`}>
-                      {post.category}
-                    </span>
-                  </div>
-                </div>
-                
-                <div className="p-6">
-                  <h3 className="text-xl font-bold text-gray-900 mb-3 line-clamp-2 hover:text-blue-600 transition-colors duration-200">
-                    {post.title}
-                  </h3>
-                  
-                  <p className="text-gray-600 mb-4 line-clamp-3">
-                    {post.excerpt}
-                  </p>
-                  
-                  <div className="flex items-center justify-between text-sm text-gray-500 mb-4">
-                    <div className="flex items-center space-x-4">
-                      <div className="flex items-center">
-                        <User className="h-4 w-4 mr-1" />
-                        {post.author}
-                      </div>
-                      <div className="flex items-center">
-                        <Calendar className="h-4 w-4 mr-1" />
-                        {post.date}
-                      </div>
+          {!loading && regularPosts.length > 0 && (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {regularPosts.map((post) => {
+                const postCategories = getCategories(post);
+                return (
+                  <article key={post.id} className="bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200 overflow-hidden">
+                    <div className="relative">
+                      <img
+                        src={getFeaturedImageUrl(post)}
+                        alt={post.title.rendered}
+                        className="w-full h-48 object-cover"
+                      />
+                      {postCategories.length > 0 && (
+                        <div className="absolute top-4 left-4">
+                          <span className={`px-3 py-1 rounded-full text-sm font-medium ${getCategoryColor(postCategories[0])}`}>
+                            {postCategories[0]}
+                          </span>
+                        </div>
+                      )}
                     </div>
-                    <div className="flex items-center">
-                      <Clock className="h-4 w-4 mr-1" />
-                      {post.readTime}
+                    
+                    <div className="p-6">
+                      <Link to={`/blog/${post.slug}`}>
+                        <h3 className="text-xl font-bold text-gray-900 mb-3 line-clamp-2 hover:text-blue-600 transition-colors duration-200">
+                          {post.title.rendered}
+                        </h3>
+                      </Link>
+                      
+                      <p className="text-gray-600 mb-4 line-clamp-3">
+                        {stripHtml(post.excerpt.rendered)}
+                      </p>
+                      
+                      <div className="flex items-center justify-between text-sm text-gray-500 mb-4">
+                        <div className="flex items-center space-x-4">
+                          <div className="flex items-center">
+                            <User className="h-4 w-4 mr-1" />
+                            {getAuthorName(post)}
+                          </div>
+                          <div className="flex items-center">
+                            <Calendar className="h-4 w-4 mr-1" />
+                            {formatDate(post.date)}
+                          </div>
+                        </div>
+                        <div className="flex items-center">
+                          <Clock className="h-4 w-4 mr-1" />
+                          {calculateReadTime(post.content.rendered)}
+                        </div>
+                      </div>
+                      
+                      <Link to={`/blog/${post.slug}`}>
+                        <button className="group flex items-center text-blue-600 hover:text-blue-700 font-medium transition-colors duration-200">
+                          Read More
+                          <ArrowRight className="h-4 w-4 ml-1 group-hover:translate-x-1 transition-transform" />
+                        </button>
+                      </Link>
                     </div>
-                  </div>
-                  
-                  <button className="group flex items-center text-blue-600 hover:text-blue-700 font-medium transition-colors duration-200">
-                    Read More
-                    <ArrowRight className="h-4 w-4 ml-1 group-hover:translate-x-1 transition-transform" />
-                  </button>
-                </div>
-              </article>
-            ))}
-          </div>
+                  </article>
+                );
+              })}
+            </div>
+          )}
 
-          {filteredPosts.length === 0 && (
+          {/* No Results */}
+          {!loading && posts.length === 0 && (
             <div className="text-center py-12">
               <div className="text-gray-500 text-lg">No articles found matching your criteria</div>
+              <p className="text-gray-400 mt-2">Try adjusting your search or filters</p>
+            </div>
+          )}
+
+          {/* Pagination */}
+          {!loading && totalPages > 1 && (
+            <div className="flex justify-center items-center space-x-4 mt-12">
+              <button
+                onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
+                disabled={currentPage === 1}
+                className="px-4 py-2 bg-blue-600 text-white rounded-lg disabled:bg-gray-300 disabled:cursor-not-allowed hover:bg-blue-700 transition-colors"
+              >
+                Previous
+              </button>
+              <span className="text-gray-600">
+                Page {currentPage} of {totalPages}
+              </span>
+              <button
+                onClick={() => setCurrentPage(prev => Math.min(totalPages, prev + 1))}
+                disabled={currentPage === totalPages}
+                className="px-4 py-2 bg-blue-600 text-white rounded-lg disabled:bg-gray-300 disabled:cursor-not-allowed hover:bg-blue-700 transition-colors"
+              >
+                Next
+              </button>
             </div>
           )}
         </div>

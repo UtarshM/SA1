@@ -1,16 +1,17 @@
-import React from 'react';
 import { Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 import { Home, ArrowLeft, Search } from 'lucide-react';
-import SEOHead from '../components/SEOHead';
-import PageTransition from '../components/PageTransition';
 
 const NotFound = () => {
   return (
-    <PageTransition>
-      <SEOHead
-        title="Page Not Found"
-        description="The page you're looking for doesn't exist. Return to Scalezix Academy homepage."
-      />
+    <div className="pt-16">
+      <Helmet>
+        <title>Page Not Found | Scalezix Academy</title>
+        <meta 
+          name="description" 
+          content="The page you're looking for doesn't exist. Return to Scalezix Academy homepage." 
+        />
+      </Helmet>
       
       <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-indigo-100 flex items-center justify-center px-4">
         <div className="max-w-lg w-full text-center">
@@ -27,8 +28,7 @@ const NotFound = () => {
           </h1>
           
           <p className="text-xl text-gray-600 mb-8">
-            Oops! The page you're looking for seems to have wandered off into the digital void. 
-            Don't worry, even our AI couldn't predict this!
+            The page you're looking for doesn't exist or has been moved.
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
@@ -55,17 +55,17 @@ const NotFound = () => {
             </h3>
             
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
-              <Link to="/courses" className="flex items-center text-blue-600 hover:text-blue-700">
+              <Link to="/programs" className="flex items-center text-blue-600 hover:text-blue-700">
                 <Search className="h-4 w-4 mr-2" />
-                Browse AI Courses
+                AI Programs
+              </Link>
+              <Link to="/blog" className="flex items-center text-blue-600 hover:text-blue-700">
+                <Search className="h-4 w-4 mr-2" />
+                Blog
               </Link>
               <Link to="/about" className="flex items-center text-blue-600 hover:text-blue-700">
                 <Search className="h-4 w-4 mr-2" />
                 About Us
-              </Link>
-              <Link to="/admissions" className="flex items-center text-blue-600 hover:text-blue-700">
-                <Search className="h-4 w-4 mr-2" />
-                Admissions
               </Link>
               <Link to="/contact" className="flex items-center text-blue-600 hover:text-blue-700">
                 <Search className="h-4 w-4 mr-2" />
@@ -75,7 +75,7 @@ const NotFound = () => {
           </div>
         </div>
       </div>
-    </PageTransition>
+    </div>
   );
 };
 

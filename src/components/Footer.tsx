@@ -1,51 +1,25 @@
-import React from 'react';
+import { Link } from 'react-router-dom';
 import { Mail, Phone, MapPin, Facebook, Twitter, Linkedin, Instagram, Youtube } from 'lucide-react';
 
 const Footer = () => {
   const quickLinks = [
-    { name: 'Courses', href: '/courses' },
+    { name: 'Home', href: '/' },
+    { name: 'Programs', href: '/programs' },
+    { name: 'Blog', href: '/blog' },
+    { name: 'About', href: '/about' },
     { name: 'Contact', href: '/contact' },
-    { name: 'Internships', href: '/internships' },
-    { name: 'Workshop', href: '/workshop' },
   ];
 
-  const aboutLinks = [
-    { name: 'About Us', href: '/about' },
-    { name: 'Our Mission', href: '/about' },
-    { name: 'Our Team', href: '/about' },
-    { name: 'Our Values', href: '/about' },
-    { name: 'Achievements', href: '/about' }
-  ];
-
-  const admissionLinks = [
-    { name: 'Admissions', href: '/admissions' },
-    { name: 'Application Process', href: '/admissions' },
-    { name: 'Requirements', href: '/admissions' },
-    { name: 'Scholarships', href: '/admissions' },
-    { name: 'Apply Now', href: '/admissions' }
-  ];
-
-  const studentLinks = [
-    { name: 'Testimonials', href: '/testimonials' },
-    { name: 'Success Stories', href: '/testimonials' },
-    { name: 'Alumni Network', href: '/testimonials' },
-    { name: 'Student Reviews', href: '/testimonials' }
-  ];
-
-  const courses = [
-    { name: 'AI Fundamentals', href: '/courses' },
-    { name: 'Machine Learning', href: '/courses' },
-    { name: 'Deep Learning', href: '/courses' },
-    { name: 'Natural Language Processing', href: '/courses' },
-    { name: 'Computer Vision', href: '/courses' },
-    { name: 'AI Ethics', href: '/courses' }
+  const programLinks = [
+    { name: 'AI Foundations Cohort', href: '/programs' },
+    { name: 'Applied AI Cohort', href: '/programs' },
+    { name: 'How Cohorts Work', href: '/programs' },
   ];
 
   const legal = [
-    { name: 'Privacy Policy', href: '/contact' },
-    { name: 'Terms of Service', href: '/contact' },
-    { name: 'Cookie Policy', href: '/contact' },
-    { name: 'Refund Policy', href: '/contact' }
+    { name: 'Terms & Conditions', href: '/terms' },
+    { name: 'Privacy Policy', href: '/privacy' },
+    { name: 'Disclaimer', href: '/disclaimer' }
   ];
 
   const socialLinks = [
@@ -59,19 +33,18 @@ const Footer = () => {
   return (
     <footer className="bg-gray-900 text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Company Info */}
           <div className="lg:col-span-2 md:col-span-2">
-            <div className="flex items-center space-x-2 mb-6">
+            <Link to="/" className="inline-block mb-6">
               <img 
-                src="/scalezix-academy-logo.png" 
+                src="/sa2 logo.webp" 
                 alt="Scalezix Academy" 
-                className="h-16 w-auto object-contain"
+                className="h-12 sm:h-14 md:h-16 lg:h-20 w-auto object-contain"
               />
-            </div>
+            </Link>
             <p className="text-gray-300 mb-6 leading-relaxed">
-              Empowering the next generation of AI professionals through comprehensive, hands-on education. 
-              Join hundreds of students who have transformed their careers with our expert-led AI courses.
+              Scalezix Academy is an education initiative by Scalezix Ventures LLP, providing honest, structured learning in artificial intelligence through cohort-based programs.
             </p>
             <div className="space-y-3">
               <div className="flex items-start space-x-3">
@@ -91,7 +64,7 @@ const Footer = () => {
 
           {/* Quick Links */}
           <div>
-            <h3 className="text-lg font-semibold mb-4">Navigation</h3>
+            <h3 className="text-lg font-semibold mb-4">Quick Links</h3>
             <ul className="space-y-2">
               {quickLinks.map((link) => (
                 <li key={link.name}>
@@ -106,68 +79,17 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* About Section */}
+          {/* Programs */}
           <div>
-            <h3 className="text-lg font-semibold mb-4">About</h3>
+            <h3 className="text-lg font-semibold mb-4">Programs</h3>
             <ul className="space-y-2">
-              {aboutLinks.map((link) => (
+              {programLinks.map((link) => (
                 <li key={link.name}>
                   <a
                     href={link.href}
                     className="text-gray-300 hover:text-white transition-colors duration-200"
                   >
                     {link.name}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Admissions Section */}
-          <div>
-            <h3 className="text-lg font-semibold mb-4">Admissions</h3>
-            <ul className="space-y-2">
-              {admissionLinks.map((link) => (
-                <li key={link.name}>
-                  <a
-                    href={link.href}
-                    className="text-gray-300 hover:text-white transition-colors duration-200"
-                  >
-                    {link.name}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Student Success Section */}
-          <div>
-            <h3 className="text-lg font-semibold mb-4">Student Success</h3>
-            <ul className="space-y-2">
-              {studentLinks.map((link) => (
-                <li key={link.name}>
-                  <a
-                    href={link.href}
-                    className="text-gray-300 hover:text-white transition-colors duration-200"
-                  >
-                    {link.name}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Courses */}
-          <div className="md:col-span-2 lg:col-span-1">
-            <h3 className="text-lg font-semibold mb-4">Our Courses</h3>
-            <ul className="space-y-2">
-              {courses.map((course) => (
-                <li key={course.name}>
-                  <a
-                    href={course.href}
-                    className="text-gray-300 hover:text-white transition-colors duration-200"
-                  >
-                    {course.name}
                   </a>
                 </li>
               ))}
@@ -215,8 +137,13 @@ const Footer = () => {
             </div>
             
             {/* Copyright */}
-            <div className="text-gray-400 text-sm text-center">
-              © 2025 Scalezix Academy. All rights reserved.
+            <div className="text-center">
+              <div className="text-gray-400 text-sm mb-1">
+                © 2025 Scalezix Academy. An education initiative by Scalezix Ventures LLP. All rights reserved.
+              </div>
+              <div className="text-gray-500 text-xs">
+                Designed for focused, cohort-based learning in artificial intelligence.
+              </div>
             </div>
             
             {/* Legal Links */}

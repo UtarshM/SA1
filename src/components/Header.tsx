@@ -17,9 +17,10 @@ const Header = () => {
   }, []);
 
   const navItems = [
-    { name: 'Courses', href: '/courses' },
-    { name: 'Internships', href: '/internships' },
-    { name: 'Workshop', href: '/workshop' },
+    { name: 'Home', href: '/' },
+    { name: 'Programs', href: '/programs' },
+    { name: 'Blog', href: '/blog' },
+    { name: 'About', href: '/about' },
     { name: 'Contact', href: '/contact' },
   ];
 
@@ -32,17 +33,15 @@ const Header = () => {
       isScrolled ? 'bg-white/95 backdrop-blur-md shadow-lg' : 'bg-white/90 backdrop-blur-sm'
     }`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
-          {/* Logo */}
-          <div className="flex items-center space-x-2">
-            <Link to="/" className="flex items-center space-x-2">
-              <img 
-                src="/scalezix-academy-logo.png" 
-                alt="Scalezix Academy" 
-                className="h-12 w-auto object-contain"
-              />
-            </Link>
-          </div>
+        <div className="flex justify-between items-center h-16 md:h-20">
+          {/* Logo - Responsive sizing */}
+          <Link to="/" className="flex items-center py-2">
+            <img 
+              src="/sa2 logo.webp" 
+              alt="Scalezix Academy" 
+              className="h-8 sm:h-10 md:h-12 lg:h-14 w-auto object-contain"
+            />
+          </Link>
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-8">
@@ -64,12 +63,12 @@ const Header = () => {
 
           {/* CTA Button */}
           <div className="hidden md:flex items-center space-x-4">
-            <Link to="/courses">
+            <Link to="/contact">
               <button 
                 className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-2 rounded-lg font-medium hover:from-blue-700 hover:to-purple-700 transition-all duration-200 transform hover:scale-105"
-                aria-label="Start learning courses"
+                aria-label="Request program details"
               >
-                Start Learning
+                Request Program Details
               </button>
             </Link>
           </div>
@@ -104,12 +103,12 @@ const Header = () => {
                   {item.name}
                 </Link>
               ))}
-              <Link to="/courses">
+              <Link to="/contact">
                 <button 
                   className="w-full mt-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-2 rounded-lg font-medium"
-                  aria-label="Start learning courses"
+                  aria-label="Request program details"
                 >
-                  Start Learning
+                  Request Program Details
                 </button>
               </Link>
             </div>
