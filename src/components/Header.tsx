@@ -33,13 +33,13 @@ const Header = () => {
       isScrolled ? 'bg-white/95 backdrop-blur-md shadow-lg' : 'bg-white/90 backdrop-blur-sm'
     }`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16 md:h-20">
+        <div className="flex justify-between items-center h-20 md:h-24">
           {/* Logo - Responsive sizing */}
           <Link to="/" className="flex items-center py-2">
             <img 
-              src="/sa2 logo.webp" 
+              src="/sa2_logo-removebg-preview.png" 
               alt="Scalezix Academy" 
-              className="h-8 sm:h-10 md:h-12 lg:h-14 w-auto object-contain"
+              className="h-16 sm:h-18 md:h-20 lg:h-24 w-auto object-contain"
             />
           </Link>
 

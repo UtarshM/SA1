@@ -35,7 +35,7 @@ const Contact = () => {
       // EmailJS configuration
       const serviceId = 'service_54fxgq8';
       const templateId = 'template_b0ztpvd';
-      const publicKey = 'YOUR_PUBLIC_KEY'; // Replace with your EmailJS public key from Account → General
+      const publicKey = 'PahX09a_71AQG3kxg';
 
       const templateParams = {
         from_name: formData.name,

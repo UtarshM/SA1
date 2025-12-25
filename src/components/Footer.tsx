@@ -38,9 +38,9 @@ const Footer = () => {
           <div className="lg:col-span-2 md:col-span-2">
             <Link to="/" className="inline-block mb-6">
               <img 
-                src="/sa2 logo.webp" 
+                src="/sa2_logo-removebg-preview.png" 
                 alt="Scalezix Academy" 
-                className="h-12 sm:h-14 md:h-16 lg:h-20 w-auto object-contain"
+                className="h-24 sm:h-28 md:h-32 lg:h-36 w-auto object-contain"
               />
             </Link>
             <p className="text-gray-300 mb-6 leading-relaxed">
