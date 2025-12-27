@@ -23,11 +23,11 @@ const Footer = () => {
   ];
 
   const socialLinks = [
-    { icon: <Facebook className="h-5 w-5" />, href: '/contact', name: 'Facebook' },
-    { icon: <Twitter className="h-5 w-5" />, href: 'https://x.com/scalezixacademy', name: 'X' },
-    { icon: <Linkedin className="h-5 w-5" />, href: '/contact', name: 'LinkedIn' },
-    { icon: <Instagram className="h-5 w-5" />, href: '/contact', name: 'Instagram' },
-    { icon: <Youtube className="h-5 w-5" />, href: '/contact', name: 'YouTube' }
+    { icon: <Facebook className="h-5 w-5" />, href: '/contact', name: 'Facebook', external: false },
+    { icon: <Twitter className="h-5 w-5" />, href: 'https://x.com/scalezixacademy', name: 'X', external: true },
+    { icon: <Linkedin className="h-5 w-5" />, href: '/contact', name: 'LinkedIn', external: false },
+    { icon: <Instagram className="h-5 w-5" />, href: '/contact', name: 'Instagram', external: false },
+    { icon: <Youtube className="h-5 w-5" />, href: '/contact', name: 'YouTube', external: false }
   ];
 
   return (
@@ -68,12 +68,12 @@ const Footer = () => {
             <ul className="space-y-2">
               {quickLinks.map((link) => (
                 <li key={link.name}>
-                  <a
-                    href={link.href}
+                  <Link
+                    to={link.href}
                     className="text-gray-300 hover:text-white transition-colors duration-200"
                   >
                     {link.name}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -85,12 +85,12 @@ const Footer = () => {
             <ul className="space-y-2">
               {programLinks.map((link) => (
                 <li key={link.name}>
-                  <a
-                    href={link.href}
+                  <Link
+                    to={link.href}
                     className="text-gray-300 hover:text-white transition-colors duration-200"
                   >
                     {link.name}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -125,14 +125,27 @@ const Footer = () => {
             {/* Social Links */}
             <div className="flex space-x-6 justify-center md:justify-start">
               {socialLinks.map((social) => (
-                <a
-                  key={social.name}
-                  href={social.href}
-                  className="text-gray-400 hover:text-white transition-colors duration-200"
-                  aria-label={social.name}
-                >
-                  {social.icon}
-                </a>
+                social.external ? (
+                  <a
+                    key={social.name}
+                    href={social.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-gray-400 hover:text-white transition-colors duration-200"
+                    aria-label={social.name}
+                  >
+                    {social.icon}
+                  </a>
+                ) : (
+                  <Link
+                    key={social.name}
+                    to={social.href}
+                    className="text-gray-400 hover:text-white transition-colors duration-200"
+                    aria-label={social.name}
+                  >
+                    {social.icon}
+                  </Link>
+                )
               ))}
             </div>
             
@@ -150,12 +163,12 @@ const Footer = () => {
             <div className="flex flex-wrap justify-center md:justify-end gap-4 text-sm">
               {legal.map((item, index) => (
                 <span key={item.name} className="flex items-center">
-                  <a
-                    href={item.href}
+                  <Link
+                    to={item.href}
                     className="text-gray-400 hover:text-white transition-colors duration-200"
                   >
                     {item.name}
-                  </a>
+                  </Link>
                   {index < legal.length - 1 && (
                     <span className="text-gray-600 mx-2">|</span>
                   )}
